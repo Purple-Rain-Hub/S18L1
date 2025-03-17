@@ -1,0 +1,26 @@
+﻿@model StudentsViewModel
+
+<table class="table table-bordered table-hover table-striped">
+	<thead class="thead-dark">
+		<tr class="text-center centroTab">
+			<th>Id</th>
+			<th>Nome</th>
+			<th>Cognome</th>
+			<th>Data di Nascita</th>
+			<th>Email</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var student in Model.Students!)
+		{
+			<tr class="centroTab">
+				<td>@student.Id</td>
+				<td>@student.Name</td>
+				<td>@student.Surname</td>
+				<td>@student.BirthDate</td>
+				<td>@student.Email</td>
+			</tr>
+		}
+	</tbody>
+</table>
