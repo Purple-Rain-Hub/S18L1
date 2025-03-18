@@ -1,0 +1,33 @@
+﻿@model AddViewModel;
+
+<form id="addForm">
+
+	<div class="formGroup">
+		<label for="name" asp-for="Name" class="form-label"></label>
+		<input id="name" asp-for="Name" class="form-control" />
+		<span class="text-danger" asp-validation-for="Name"></span>
+	</div>
+
+	<div class="formGroup">
+		<label for="surname" asp-for="Surname" class="form-label"></label>
+		<input id="surname" asp-for="Surname" class="form-control" />
+		<span class="text-danger" asp-validation-for="Surname"></span>
+	</div>
+
+	<div class="formGroup">
+		<label for="birthdate" asp-for="BirthDate" class="form-label"></label>
+		<input id="birthdate" asp-for="BirthDate" class="form-control" type="date" />
+		<span class="text-danger" asp-validation-for="BirthDate"></span>
+	</div>
+
+	<div class="formGroup">
+		<label for="email" asp-for="Email" class="form-label"></label>
+		<input id="email" asp-for="Email" class="form-control" type="email" />
+		<span class="text-danger" asp-validation-for="Email"></span>
+	</div>
+
+	<div class="m-2 text-end">
+		<button class="btn btn-sm btn-success" type="button" onclick="sendAddModal()">Save</button>
+		<button class="btn btn-sm btn-warning" type="reset">Reset</button>
+	</div>
+</form>

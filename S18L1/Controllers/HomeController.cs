@@ -76,5 +76,32 @@ namespace S18L1.Controllers
                 message = result ? "Delete success" : "Error in the entity delete on Db"
             });
         }
+
+        public IActionResult Add()
+        {
+            return PartialView("_StudentAdd");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveAdd(AddViewModel addViewModel)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return Json(new
+            //    {
+            //        message = "Errore nel modello del form",
+            //        success = false
+            //    });
+
+            //}
+
+            var result = await _homeService.AddStudent(addViewModel);
+
+            return Json(new
+            {
+                success = result,
+                message = result ? "Update success" : "Error in the entity update on Db"
+            });
+        }
     }
 }

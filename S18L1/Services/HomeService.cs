@@ -82,5 +82,21 @@ namespace S18L1.Services
             _context.Students.Remove(student);
             return await SaveAsync();
         }
+
+        public async Task<bool> AddStudent(AddViewModel addViewModel)
+        {
+            var student = new Student()
+            {
+                Id = Guid.NewGuid(),
+                Name = addViewModel.Name,
+                Surname = addViewModel.Surname,
+                BirthDate = addViewModel.BirthDate,
+                Email = addViewModel.Email,
+            };
+
+            _context.Students.Add(student);
+
+            return await SaveAsync();
+        }
     }
 }

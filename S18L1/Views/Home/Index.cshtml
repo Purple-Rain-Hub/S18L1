@@ -4,6 +4,7 @@
 
 <div class="container">
 	<h1>Lista Studenti Istituto Superiore Cacioppo</h1>
+	<button class="mx-1 btn btn-warning" type="button" onclick="showAddModal()">Aggiungi Studente</button>
 	<div id="studentsTable"></div>
 </div>
 
@@ -15,6 +16,22 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div id="editBody" class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="addModal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Add Product</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div id="addBody" class="modal-body">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
@@ -91,6 +108,49 @@
 				method: "POST"
 			})
 			loadList();
+		}
+
+		function showAddModal(){
+			fetch('Home/Add')
+			.then(res => res.text())
+			.then(res => {
+				const modalComponent = document.getElementById('addModal')
+
+				if(modalComponent){
+					let addModal = new bootstrap.Modal(modalComponent)
+					let body = document.getElementById('addBody')
+
+					if(body){
+						body.innerHTML = res
+					}
+					addModal.show();
+				}
+			})
+		}
+
+		async function sendAddModal(){
+			const form = document.getElementById('addForm');
+
+			if(form){
+				const formData = new FormData(form);
+
+				const result = await fetch(`Home/Add/SaveAdd`, {
+				method: "POST",
+				body: formData
+				})
+
+				const response = await result.json();
+
+				if(response.success){
+				const modalComponent = document.getElementById('addModal');
+
+					if(modalComponent){
+						const modalComponentInstance = bootstrap.Modal.getInstance(editModal);
+						modalComponentInstance.hide();
+						loadList();
+					}
+				}
+			}
 		}
 
 	</script>
