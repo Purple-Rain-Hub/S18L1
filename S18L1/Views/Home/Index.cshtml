@@ -1,28 +1,97 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="container">
-    <h1>Lista Studenti Istituto Superiore Cacioppo</h1>
-    <div id="studentsTable"></div>
+	<h1>Lista Studenti Istituto Superiore Cacioppo</h1>
+	<div id="studentsTable"></div>
 </div>
 
-@section Scripts{
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let studentsTable = document.getElementById('studentsTable')
+<div id="editModal" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Edit Product</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div id="editBody" class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-            if(studentsTable){
-                fetch("students/get-all", {
-                    method: "GET"
-                })
-                .then(response => {
-                    if(response.ok){
-                        return response.text();
-                    }
-                })
-                .then(response => studentsTable.innerHTML = response)
-            }
-        });
-    </script>
+@section Scripts {
+	<script>
+		document.addEventListener("DOMContentLoaded", loadList);
+
+		function loadList(){
+			let studentsTable = document.getElementById('studentsTable')
+
+			if(studentsTable){
+				fetch("students/get-all", {
+					method: "GET"
+				})
+				.then(response => {
+					if(response.ok){
+						return response.text();
+					}
+				})
+				.then(response => studentsTable.innerHTML = response)
+			}
+		}
+
+		function showEditModal(id){
+			fetch(`Home/Edit/${id}`)
+			.then(res => res.text())
+			.then(res=> {
+				const modalComponent = document.getElementById('editModal')
+
+				if(modalComponent){
+					let editModal = new bootstrap.Modal(modalComponent)
+					let body = document.getElementById('editBody')
+
+					if(body){
+						body.innerHTML = res
+					}
+					editModal.show();
+				}
+			})
+		};
+
+		async function sendEditForm(){
+			const form = document.getElementById('editForm');
+
+			if(form){
+				const formData = new FormData(form);
+
+				const result = await fetch(`Home/Edit/SaveEdit`, {
+				method: "POST",
+				body: formData
+				})
+
+				const response = await result.json();
+
+				if(response.success){
+				const modalComponent = document.getElementById('editModal');
+
+					if(modalComponent){
+						const modalComponentInstance = bootstrap.Modal.getInstance(editModal);
+						modalComponentInstance.hide();
+						loadList();
+					}
+				}
+			}
+		}
+
+		function deleteStudent(id){
+			fetch(`Home/Delete/${id}`, {
+				method: "POST"
+			})
+			loadList();
+		}
+
+	</script>
 }
