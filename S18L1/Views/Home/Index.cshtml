@@ -128,28 +128,51 @@
 			})
 		}
 
-		async function sendAddModal(){
-			const form = document.getElementById('addForm');
+		// async function sendAddModal(){
+		// 	const form = document.getElementById('addForm');
 
+		// 	if(form){
+		// 		const formData = new FormData(form);
+
+		// 		const result = await fetch(`Home/Add/SaveAdd`, {
+		// 		method: "POST",
+		// 		body: formData
+		// 		})
+
+		// 		const response = await result.json();
+
+		// 		if(response.success){
+		// 		const modalComponent = document.getElementById('addModal');
+
+		// 			if(modalComponent){
+		// 				const modalComponentInstance = bootstrap.Modal.getInstance(editModal);
+		// 				modalComponentInstance.hide();
+		// 				loadList();
+		// 			}
+		// 		}
+		// 	}
+		// }
+				async function sendAddModal(){
+			const form = document.getElementById('addForm');
 			if(form){
 				const formData = new FormData(form);
 
-				const result = await fetch(`Home/Add/SaveAdd`, {
-				method: "POST",
-				body: formData
-				})
+				const result = await fetch('Home/Add/SaveAdd', {
+					method: "POST",
+					body: formData
+				});
 
 				const response = await result.json();
 
 				if(response.success){
-				const modalComponent = document.getElementById('addModal');
-
-					if(modalComponent){
-						const modalComponentInstance = bootstrap.Modal.getInstance(editModal);
-						modalComponentInstance.hide();
+					const addModal = document.getElementById('addModal');
+					if(addModal){
+						const addModalComponent = bootstrap.Modal.getInstance(addModal);
+						addModalComponent.hide();
 						loadList();
 					}
 				}
+
 			}
 		}
 

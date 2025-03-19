@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using S18L1.Data;
 
@@ -11,9 +12,11 @@ using S18L1.Data;
 namespace S18L1.Migrations
 {
     [DbContext(typeof(S18L1DbContext))]
-    partial class S18L1DbContextModelSnapshot : ModelSnapshot
+    [Migration("20250319134348_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
