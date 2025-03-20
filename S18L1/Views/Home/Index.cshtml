@@ -4,6 +4,15 @@
 
 <div class="container">
 	<h1>Lista Studenti Istituto Superiore Cacioppo</h1>
+	@if (User.Identity.IsAuthenticated)
+	{
+		<h2>Benvenuto, @User.Identity.Name</h2>
+	}
+	else
+	{
+		<h2>Benvenuto, Effettua l'accesso</h2>
+	}
+
 	<button class="mx-1 btn btn-warning" type="button" onclick="showAddModal()">Aggiungi Studente</button>
 	<div id="studentsTable"></div>
 </div>
