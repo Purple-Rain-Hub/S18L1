@@ -26,6 +26,9 @@ namespace S18L1.Data
             modelBuilder.Entity<ApplicationUserRole>().HasOne(ur => ur.Role).WithMany(r => r.ApplicationUserRoles).HasForeignKey(ur => ur.RoleId);
 
             modelBuilder.Entity<ApplicationUserRole>().Property(p => p.Date).HasDefaultValueSql("GETDATE()").IsRequired(true);
+            
+            modelBuilder.Entity<Student>().HasOne(s => s.User).WithMany(u => u.Students).HasForeignKey(s => s.UserId);
+
         }
     }
 }

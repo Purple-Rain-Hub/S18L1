@@ -8,6 +8,7 @@
 			<th>Cognome</th>
 			<th>Data di Nascita</th>
 			<th>Email</th>
+			<th>Inserito da</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -20,6 +21,7 @@
 				<td>@student.Surname</td>
 				<td>@student.BirthDate</td>
 				<td>@student.Email</td>
+				<td>@student.User.Email</td>
 				<td class=" d-flex border-0">
 					<button class="mx-1 btn btn-warning" type="button" onclick="showEditModal('@student.Id')">Modifica</button>
 					<button class="mx-1 btn btn-danger" type="button" onclick="deleteStudent('@student.Id')">Elimina</button>

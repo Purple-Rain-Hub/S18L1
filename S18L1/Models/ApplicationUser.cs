@@ -12,5 +12,6 @@ namespace S18L1.Models
         [Required]
         public required DateOnly BirthDate { get; set; }
         public ICollection<ApplicationUserRole> ApplicationUserRoles { get; set; }
+        public ICollection<Student> Students { get; set; }
     }
 }

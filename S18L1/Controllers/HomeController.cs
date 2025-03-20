@@ -3,18 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using S18L1.Models;
 using S18L1.ViewModels;
 using S18L1.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace S18L1.Controllers
 {
     public class HomeController : Controller
     {
         private readonly HomeService _homeService;
-
         public HomeController(HomeService homeService)
         {
             _homeService = homeService;
         }
 
+        [AllowAnonymous]
         public IActionResult Index() 
         { 
         return View();
@@ -27,6 +28,7 @@ namespace S18L1.Controllers
             return PartialView("_StudentsList", studentsList);
         }
 
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var student = await _homeService.GetStudentById(id);
@@ -43,6 +45,7 @@ namespace S18L1.Controllers
             return PartialView("_StudentEdit", studentEdit);
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpPost("Home/Edit/SaveEdit")]
         public async Task<IActionResult> SaveEdit(EditViewModel editViewModel)
         {
@@ -65,6 +68,7 @@ namespace S18L1.Controllers
             });
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -77,11 +81,13 @@ namespace S18L1.Controllers
             });
         }
 
+        [Authorize(Roles = "Teacher")]
         public IActionResult Add()
         {
             return PartialView("_StudentAdd");
         }
-
+        
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         public async Task<IActionResult> SaveAdd(AddViewModel addViewModel)
         {
@@ -95,7 +101,7 @@ namespace S18L1.Controllers
 
             //}
 
-            var result = await _homeService.AddStudent(addViewModel);
+            var result = await _homeService.AddStudent(addViewModel, User);
 
             return Json(new
             {

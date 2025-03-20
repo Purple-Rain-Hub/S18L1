@@ -103,6 +103,14 @@ namespace S18L1.Controllers
 
             var emailClaim = new Claim(ClaimTypes.Email, user.Email);
 
+            var roles = await _signInManager.UserManager.GetRolesAsync(user);
+
+            foreach(var role in roles)
+            {
+                var roleClaim = new Claim(ClaimTypes.Role, role);
+                claims.Add(roleClaim);
+            }
+
             claims.Add(nameClaim);
             claims.Add(emailClaim);
 
